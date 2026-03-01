@@ -6,121 +6,125 @@
 <title>Eid Mubarak 🌙</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(to bottom,#0b1c2d,#102a43);
+  color:white;
+  text-align:center;
+  overflow:hidden;
+  transition:background 1s ease;
 }
 
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, #0b1c2d, #102a43);
-  color: white;
-  text-align: center;
-  overflow-x: hidden;
-  transition: background 0.6s ease;
+/* Star Background */
+.stars{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:radial-gradient(white 1px,transparent 1px);
+  background-size:40px 40px;
+  opacity:0.05;
+  z-index:-1;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(white 1px, transparent 1px);
-  background-size: 50px 50px;
-  opacity: 0.05;
-  z-index: -1;
+/* Floating Lanterns */
+.lantern{
+  position:absolute;
+  bottom:-100px;
+  font-size:30px;
+  animation:floatUp 15s linear infinite;
+  opacity:0.8;
 }
 
-.section {
-  display: none;
-  padding: 60px 20px;
-  min-height: 100vh;
-  animation: fadeIn 0.8s ease forwards;
+@keyframes floatUp{
+  0%{transform:translateY(0);}
+  100%{transform:translateY(-120vh);}
 }
 
-.active {
-  display: block;
+.section{
+  display:none;
+  padding:60px 20px;
+  min-height:100vh;
+  animation:fadeIn 1s ease forwards;
 }
 
-h1, h2, h3 {
-  margin-bottom: 20px;
+.active{display:block;}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
 }
 
-p {
-  max-width: 600px;
-  margin: 0 auto 20px;
-  line-height: 1.6;
-  font-size: 18px;
+button{
+  padding:12px 25px;
+  margin:15px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(45deg,#c9a227,#f7e27c);
+  color:#0b1c2d;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
 }
 
-button {
-  padding: 12px 25px;
-  margin: 15px;
-  border: none;
-  border-radius: 30px;
-  background: linear-gradient(45deg, #c9a227, #f7e27c);
-  color: #0b1c2d;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px #f7e27c;
 }
 
-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 15px #f7e27c;
+.moon{
+  font-size:90px;
+  cursor:pointer;
+  transition:0.5s;
 }
 
-.moon {
-  font-size: 90px;
-  cursor: pointer;
-  transition: transform 0.5s ease, text-shadow 0.5s ease;
+.moon:hover{
+  transform:scale(1.1);
+  text-shadow:0 0 25px gold;
 }
 
-.moon:hover {
-  transform: scale(1.1);
-  text-shadow: 0 0 20px gold;
+.box{
+  font-size:70px;
+  cursor:pointer;
+  transition:0.3s;
 }
 
-.box {
-  font-size: 70px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+.box:hover{
+  transform:rotate(-5deg) scale(1.1);
 }
 
-.box:hover {
-  transform: rotate(-5deg) scale(1.1);
+/* Sparkle Effect */
+.sparkle{
+  position:absolute;
+  font-size:20px;
+  animation:sparkleAnim 1s ease forwards;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes sparkleAnim{
+  from{opacity:1;transform:scale(0);}
+  to{opacity:0;transform:scale(2);}
 }
 
-#section5 {
-  background: linear-gradient(to top, #102a43, #0b1c2d);
-  padding-top: 100px;
-}
-
-#section5 h1 {
-  font-size: 36px;
-  color: #f7e27c;
-  text-shadow: 0 0 15px rgba(247, 226, 124, 0.6);
+#section5 h1{
+  color:#f7e27c;
+  text-shadow:0 0 20px rgba(247,226,124,0.6);
 }
 </style>
 </head>
 
 <body>
 
-<!-- SECTION 1: MOON INTRO -->
+<div class="stars"></div>
+
+<!-- SECTION 1 -->
 <div id="section1" class="section active">
   <h2>The moon has been sighted...</h2>
-  <p>Tap the crescent to begin your Eid surprise 🌙</p>
+  <p>Tap the crescent to begin 🌙</p>
   <div class="moon">🌙</div>
 </div>
 
-<!-- SECTION 2: PREPARATION -->
+<!-- SECTION 2 -->
 <div id="section2" class="section">
   <h2>Prepare for Eid</h2>
   <button onclick="lightLanterns()">Light the Lanterns</button>
@@ -128,78 +132,81 @@ button:hover {
   <button onclick="goToDua()">Continue</button>
 </div>
 
-<!-- SECTION 3: DUA -->
+<!-- SECTION 3 -->
 <div id="section3" class="section">
   <h2>Take a moment for dua 🤲</h2>
-  <p>Close your eyes and make a prayer for your loved ones.</p>
+  <p>Close your eyes and make a prayer.</p>
   <button onclick="goToEidi()">Ameen</button>
 </div>
 
-<!-- SECTION 4: EIDI BOX -->
+<!-- SECTION 4 -->
 <div id="section4" class="section">
-  <h2>A small Eidi awaits 🎁</h2>
+  <h2>Your Eidi Awaits 🎁</h2>
   <div class="box" onclick="openBox()">🎁</div>
   <p id="boxText"></p>
 </div>
 
-<!-- SECTION 5: FINAL MESSAGE -->
+<!-- SECTION 5 -->
 <div id="section5" class="section">
   <h1>Eid Mubarak 🌙✨</h1>
   <p>
-    May this Eid bring peace to your heart<br>
-    and warmth to your home.<br><br>
-    May Allah accept your fasts and prayers,<br>
-    and fill your life with barakah.<br><br>
-    Wishing you and your family<br>
-    a joyful and blessed Eid.
+    May this Eid bring peace to your heart<br><br>
+    May your home be filled with barakah<br><br>
+    May Allah accept your fasts and prayers<br><br>
+    Wishing you a joyful and blessed Eid.
   </p>
   <h3>— Samir 🌙</h3>
 </div>
 
 <script>
-// Switch sections
-function showSection(sectionId) {
-  document.querySelectorAll(".section").forEach(section => {
-    section.classList.remove("active");
-  });
-  document.getElementById(sectionId).classList.add("active");
+
+function showSection(id){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
 
-// Moon click
-document.querySelector(".moon").addEventListener("click", function() {
-  showSection("section2");
-});
+document.querySelector(".moon").onclick=()=>showSection("section2");
 
-// Lantern button
-function lightLanterns() {
-  document.body.style.background = "linear-gradient(to bottom, #123c55, #0b1c2d)";
-  document.getElementById("lanternText").innerText =
-    "The lanterns glow warmly... May your home always shine with happiness.";
-}
+function lightLanterns(){
+  document.getElementById("lanternText").innerText=
+  "The lanterns glow warmly...";
 
-// Go to dua
-function goToDua() {
-  showSection("section3");
-}
-
-// Go to eidi
-function goToEidi() {
-  showSection("section4");
-}
-
-// Gift box logic
-let boxClicks = 0;
-
-function openBox() {
-  boxClicks++;
-  const text = document.getElementById("boxText");
-
-  if (boxClicks < 3) {
-    text.innerText = "Tap again to open...";
-  } else {
-    showSection("section5");
+  for(let i=0;i<6;i++){
+    let lantern=document.createElement("div");
+    lantern.className="lantern";
+    lantern.innerText="🏮";
+    lantern.style.left=Math.random()*100+"%";
+    lantern.style.animationDuration=(10+Math.random()*10)+"s";
+    document.body.appendChild(lantern);
   }
 }
+
+function goToDua(){showSection("section3");}
+function goToEidi(){showSection("section4");}
+
+let clicks=0;
+function openBox(){
+  clicks++;
+  if(clicks<3){
+    document.getElementById("boxText").innerText="Tap again...";
+  }else{
+    sparkleBurst();
+    setTimeout(()=>showSection("section5"),1000);
+  }
+}
+
+function sparkleBurst(){
+  for(let i=0;i<20;i++){
+    let s=document.createElement("div");
+    s.className="sparkle";
+    s.innerText="✨";
+    s.style.left=(40+Math.random()*20)+"%";
+    s.style.top=(40+Math.random()*20)+"%";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1000);
+  }
+}
+
 </script>
 
 </body>
