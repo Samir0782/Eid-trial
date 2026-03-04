@@ -1,65 +1,80 @@
+const myMemes = ['Aaaah-cat.webp', '8P.jpg'];
+let isRevealed = false;
+
+function nextPhase(phaseId) {
+    document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
+    document.getElementById(phaseId).classList.add('active');
+}
+
 const searchArea = document.getElementById('search-area');
 const circle = document.getElementById('reveal-circle');
-const moonIcon = document.getElementById('moon');
+const moon = document.getElementById('moon');
 const memeDisplay = document.getElementById('meme-discovery');
-const hint = document.getElementById('hint-text');
 
-let isRevealed = false;
-const myMemes = ['Aaaah-cat.webp', '8P.jpg']; 
-
-// Movement Tracking
-searchArea.addEventListener('mousemove', (e) => handleMove(e.pageX, e.pageY));
-searchArea.addEventListener('touchmove', (e) => {
-    e.preventDefault(); // Stop mobile bounce
-    handleMove(e.touches[0].pageX, e.touches[0].pageY);
-}, { passive: false });
-
-function handleMove(x, y) {
+// Movement Logic
+const handleMove = (e) => {
     if (isRevealed) return;
+    const x = e.touches ? e.touches[0].pageX : e.pageX;
+    const y = e.touches ? e.touches[0].pageY : e.pageY;
 
     circle.style.display = 'block';
     circle.style.left = x + 'px';
     circle.style.top = y + 'px';
 
-    // Get distance between Circle center and Moon center
-    const moonRect = moonIcon.getBoundingClientRect();
-    const moonX = moonRect.left + moonRect.width / 2;
-    const moonY = moonRect.top + moonRect.height / 2;
-    const distance = Math.hypot(x - moonX, y - moonY);
+    const moonRect = moon.getBoundingClientRect();
+    const dist = Math.hypot(x - (moonRect.left + 35), y - (moonRect.top + 35));
 
-    // If moon is caught in the magnifying glass (80% overlap)
-    if (distance < 50) {
-        triggerSuccess();
-    } 
-    // Randomly show memes if far away
-    else if (distance > 250 && Math.random() > 0.985) {
-        showRandomMeme(x, y);
+    if (dist < 60) {
+        triggerReveal();
+    } else if (dist > 200 && Math.random() > 0.98) {
+        showMeme(x, y);
     }
-}
+};
 
-function showRandomMeme(x, y) {
+searchArea.addEventListener('mousemove', handleMove);
+searchArea.addEventListener('touchmove', (e) => { e.preventDefault(); handleMove(e); }, {passive: false});
+
+function showMeme(x, y) {
     if (memeDisplay.style.opacity == '0') {
         memeDisplay.src = myMemes[Math.floor(Math.random() * myMemes.length)];
         memeDisplay.style.left = (x - 60) + 'px';
         memeDisplay.style.top = (y - 60) + 'px';
-        memeDisplay.style.opacity = '0.8';
-        setTimeout(() => memeDisplay.style.opacity = '0', 1000);
+        memeDisplay.style.opacity = '1';
+        setTimeout(() => memeDisplay.style.opacity = '0', 800);
     }
 }
 
-function triggerSuccess() {
+function triggerReveal() {
     isRevealed = true;
-    moonIcon.style.opacity = '1';
-    hint.innerText = "Moon Sighted! ✨";
-    
-    // Start lanterns flying up
-    if (typeof lightLanterns === "function") lightLanterns();
-
-    // Cinematic zoom transition
+    moon.style.opacity = '1';
+    lightLanterns();
     setTimeout(() => {
-        circle.style.transition = "transform 1.5s ease-in, opacity 1s";
-        circle.style.transform = "translate(-50%, -50%) scale(15)";
+        circle.style.transition = "transform 1s, opacity 1s";
+        circle.style.transform = "translate(-50%, -50%) scale(10)";
         circle.style.opacity = "0";
-        setTimeout(() => nextPhase('phase2'), 1200);
-    }, 1000);
+        setTimeout(() => nextPhase('phase2'), 1000);
+    }, 1200);
 }
+
+function lightLanterns() {
+    for(let i=0; i<15; i++) {
+        setTimeout(() => {
+            let l = document.createElement("div");
+            l.className = "lantern";
+            l.innerText = "🏮";
+            l.style.left = Math.random() * 90 + "%";
+            document.body.appendChild(l);
+        }, i * 200);
+    }
+}
+
+let clicks = 0;
+function openBox() {
+    clicks++;
+    if(clicks < 3) {
+        document.getElementById('box-instruction').innerText = `Tap ${3-clicks} more!`;
+    } else {
+        nextPhase('phase4');
+    }
+        }
+        
