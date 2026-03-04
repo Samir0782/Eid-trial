@@ -1,12 +1,63 @@
-<div id="phase1" class="phase active">
-    <div class="sky-container" id="search-area">
-        <h2 id="hint-text">Search the sky for the moon... 🌙</h2>
-        
-        <div id="reveal-circle"></div>
-        
-        <img id="meme-discovery" src="" class="hidden-meme"> 
-        
-        <div id="moon" class="moon-target">🌙</div>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Eid Mubarak 🌙</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stars"></div>
 
+    <div id="phase1" class="phase active">
+        <div id="search-area">
+            <h2 id="hint-text">Search the sky for the moon... 🌙</h2>
+            <div id="reveal-circle"></div>
+            <img id="meme-discovery" src="" class="hidden-meme"> 
+            <div id="moon" class="moon-target">🌙</div>
+        </div>
+    </div>
+
+    <div id="phase2" class="phase">
+        <div class="window">
+            <div class="window-header">
+                <span class="dots">● ● ●</span>
+                <span class="title">eid-preparations.app</span>
+            </div>
+            <div class="window-content">
+                <h2>Prepare for Eid</h2>
+                <div id="decor-status">The night is quiet...</div>
+                <button onclick="lightLanterns()">🏮 Light Lanterns</button>
+                <button onclick="nextPhase('phase3')">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="phase3" class="phase">
+        <div class="window">
+            <div class="window-header"><span class="title">eidi-gift.exe</span></div>
+            <div class="window-content">
+                <h2>Your Eidi Awaits 🎁</h2>
+                <div class="gift-box" onclick="openBox()">🎁</div>
+                <p id="box-instruction">Tap 3 times to open!</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="phase4" class="phase">
+        <div class="window">
+            <div class="window-header"><span class="title">eid_mubarak_letter.txt</span></div>
+            <div class="window-content">
+                <h1>Eid Mubarak 🌙✨</h1>
+                <p style="margin: 20px 0; line-height: 1.5;">
+                    May this Eid bring peace to your heart and barakah to your home.
+                </p>
+                <h3>— Samir 🌙</h3>
+                <button onclick="location.reload()">Restart</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
