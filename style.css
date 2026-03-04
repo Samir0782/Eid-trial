@@ -1,8 +1,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #050b14;
+    background: #000;
     height: 100vh;
     overflow: hidden;
 }
@@ -11,56 +10,56 @@ body {
     width: 100vw; 
     height: 100vh; 
     position: relative; 
-    overflow: hidden; 
-    /* Gradient inspired by the Google Ramadan site */
-    background: radial-gradient(circle at 50% 50%, #1b2735 0%, #090a0f 100%);
+    /* Bottom Layer: Your uploaded background */
+    background-image: url('starry-night-sky-stockcake.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
 .text-wrapper {
     position: absolute;
-    top: 15%; 
+    top: 12%; 
     width: 100%;
     display: flex;
     justify-content: center;
-    z-index: 20;
+    z-index: 30;
 }
 
 #hint-text {
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.8);
-    text-shadow: 0 0 10px rgba(0,0,0,0.5);
-    text-align: center;
+    font-family: 'Dancing Script', cursive; /* Aesthetic Cursive */
+    font-size: 2.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 15px rgba(0,0,0,1);
+    pointer-events: none;
 }
 
 #reveal-circle {
     position: absolute;
-    width: 160px; height: 160px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 170px; height: 170px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
-    /* Creates the hole in the darkness */
-    box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.94); 
+    /* Top Layer: Creating the dark mask */
+    box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.96); 
     transform: translate(-50%, -50%);
     display: none;
-    z-index: 10;
+    z-index: 20;
 }
 
 .moon-target {
     position: absolute;
-    top: 35%; left: 60%;
-    width: 80px; height: auto;
+    top: 40%; left: 55%;
+    width: 90px;
     opacity: 0;
-    filter: drop-shadow(0 0 15px white);
-    transition: opacity 0.4s;
+    filter: drop-shadow(0 0 20px gold);
     z-index: 5;
-    pointer-events: none;
+    transition: opacity 0.5s;
 }
 
-.hidden-meme {
+.persistent-meme {
     position: absolute;
-    width: 120px; 
+    width: 110px;
     border-radius: 10px;
-    opacity: 0; 
+    opacity: 0; /* Hidden by darkness until circle passes over */
     z-index: 6;
-    transition: opacity 0.3s;
+    transition: opacity 0.2s;
 }
-
