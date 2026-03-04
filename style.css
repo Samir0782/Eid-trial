@@ -1,1 +1,66 @@
+* { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #050b14;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#search-area { 
+    width: 100vw; 
+    height: 100vh; 
+    position: relative; 
+    overflow: hidden; 
+    /* Gradient inspired by the Google Ramadan site */
+    background: radial-gradient(circle at 50% 50%, #1b2735 0%, #090a0f 100%);
+}
+
+.text-wrapper {
+    position: absolute;
+    top: 15%; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 20;
+}
+
+#hint-text {
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+#reveal-circle {
+    position: absolute;
+    width: 160px; height: 160px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    /* Creates the hole in the darkness */
+    box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.94); 
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 10;
+}
+
+.moon-target {
+    position: absolute;
+    top: 35%; left: 60%;
+    width: 80px; height: auto;
+    opacity: 0;
+    filter: drop-shadow(0 0 15px white);
+    transition: opacity 0.4s;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.hidden-meme {
+    position: absolute;
+    width: 120px; 
+    border-radius: 10px;
+    opacity: 0; 
+    z-index: 6;
+    transition: opacity 0.3s;
+}
 
