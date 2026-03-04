@@ -1,0 +1,58 @@
+/* Full-screen Dark Sky */
+#search-area {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: #050b14; /* Extra dark for the hunt */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* The Magnifying Glass Effect */
+#reveal-circle {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    /* This creates the dark overlay with a hole in the middle */
+    box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.9); 
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: none;
+}
+
+/* The Secret Moon */
+.moon-target {
+    position: absolute;
+    top: 30%; 
+    left: 70%; /* Adjust these to hide it anywhere */
+    font-size: 70px;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.5s;
+    z-index: 5;
+}
+
+/* Meme Styling */
+.hidden-meme {
+    position: absolute;
+    width: 120px;
+    height: auto;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 6;
+}
+
+#hint-text {
+    position: absolute;
+    bottom: 10%;
+    width: 100%;
+    text-align: center;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+}
