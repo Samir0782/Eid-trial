@@ -3,11 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Eid Moon Sighting</title>
+    <title>Eid Moon Sighting 🌙</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS SECTION */
+        * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
+
+        body {
+            background: #000;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        #search-area { 
+            width: 100vw; 
+            height: 100vh; 
+            position: relative; 
+            overflow: hidden; 
+            /* Your uploaded background */
+            background-image: url('starry-night-sky-stockcake.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .text-wrapper {
+            position: absolute;
+            top: 12%; 
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 30;
+        }
+
+        #hint-text {
+            font-family: 'Dancing Script', cursive; /* Aesthetic Cursive */
+            font-size: 2.8rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 15px rgba(0,0,0,1);
+            text-align: center;
+            pointer-events: none;
+        }
+
+        /* The Magnifying Glass / Flashlight */
+        #reveal-circle {
+            position: absolute;
+            width: 170px; height: 170px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            /* Creates the dark top layer mask */
+            box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.96); 
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 20;
+        }
+
+        /* Realistic CSS Crescent Moon */
+        .moon-container {
+            position: absolute;
+            top: 30%; 
+            left: 65%;
+            width: 80px;
+            height: 80px;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 5;
+        }
+
+        .crescent-moon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: 15px 15px 0 0 white; /* Creates the realistic sliver effect */
+            transform: rotate(-35deg);
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.8));
+        }
+
+        /* Centered Meme */
+        #meme-discovery {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130px; 
+            border-radius: 12px;
+            opacity: 0; 
+            z-index: 6;
+            transition: opacity 0.2s;
+        }
+    </style>
 </head>
 <body>
+
     <div id="search-area">
         <div class="text-wrapper">
             <h2 id="hint-text">Search the sky for the moon...</h2>
@@ -15,12 +102,69 @@
         
         <div id="reveal-circle"></div>
 
-        <img src="Aaaah-cat.webp" class="persistent-meme" id="meme1" style="top: 60%; left: 20%;">
-        <img src="8P.jpg" class="persistent-meme" id="meme2" style="top: 25%; left: 75%;">
+        <img src="8P.jpg" id="meme-discovery">
         
-        <img src="moon.jpg" id="moon" class="moon-target">
+        <div class="moon-container" id="moon">
+            <div class="crescent-moon"></div>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        /* JAVASCRIPT SECTION */
+        let isRevealed = false;
+
+        const searchArea = document.getElementById('search-area');
+        const circle = document.getElementById('reveal-circle');
+        const moon = document.getElementById('moon');
+        const meme = document.getElementById('meme-discovery');
+        const hint = document.getElementById('hint-text');
+
+        const handleMove = (e) => {
+            if (isRevealed) return;
+            
+            // Supports both mouse and touch
+            const x = e.touches ? e.touches[0].pageX : e.pageX;
+            const y = e.touches ? e.touches[0].pageY : e.pageY;
+
+            circle.style.display = 'block';
+            circle.style.left = x + 'px';
+            circle.style.top = y + 'px';
+
+            // 1. Handle Meme Visibility (Stays visible while circle is over center)
+            const memeRect = meme.getBoundingClientRect();
+            const memeCenterX = memeRect.left + (memeRect.width / 2);
+            const memeCenterY = memeRect.top + (memeRect.height / 2);
+            const distToMeme = Math.hypot(x - memeCenterX, y - memeCenterY);
+            
+            meme.style.opacity = (distToMeme < 85) ? "0.9" : "0";
+
+            // 2. Handle Moon Reveal (Collision Detection)
+            const moonRect = moon.getBoundingClientRect();
+            const moonCenterX = moonRect.left + (moonRect.width / 2);
+            const moonCenterY = moonRect.top + (moonRect.height / 2);
+            const distToMoon = Math.hypot(x - moonCenterX, y - moonCenterY);
+
+            // If the center of the circle is close enough to the moon center
+            if (distToMoon < 50) { 
+                isRevealed = true;
+                moon.style.opacity = '1';
+                meme.style.opacity = '0';
+                hint.innerText = "The Moon has been sighted! ✨";
+                
+                // Gradually remove the darkness to reveal the whole sky
+                setTimeout(() => {
+                    circle.style.transition = "opacity 2s ease";
+                    circle.style.opacity = "0";
+                }, 800);
+            }
+        };
+
+        // Listen for PC and Mobile interactions
+        searchArea.addEventListener('mousemove', handleMove);
+        searchArea.addEventListener('touchmove', (e) => { 
+            e.preventDefault(); // Prevents screen shaking on mobile
+            handleMove(e); 
+        }, {passive: false});
+    </script>
 </body>
 </html>
