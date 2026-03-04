@@ -1,16 +1,14 @@
-const myMemes = ['Aaaah-cat.webp', '8P.jpg'];
 let isRevealed = false;
 
 const searchArea = document.getElementById('search-area');
 const circle = document.getElementById('reveal-circle');
 const moon = document.getElementById('moon');
-const memeDisplay = document.getElementById('meme-discovery');
+const memes = document.querySelectorAll('.persistent-meme');
 const hint = document.getElementById('hint-text');
 
 const handleMove = (e) => {
     if (isRevealed) return;
     
-    // Support both mouse and touch
     const x = e.touches ? e.touches[0].pageX : e.pageX;
     const y = e.touches ? e.touches[0].pageY : e.pageY;
 
@@ -18,23 +16,45 @@ const handleMove = (e) => {
     circle.style.left = x + 'px';
     circle.style.top = y + 'px';
 
-    // Calculate distance to the moon
-    const moonRect = moon.getBoundingClientRect();
-    const moonCenterX = moonRect.left + (moonRect.width / 2);
-    const moonCenterY = moonRect.top + (moonRect.height / 2);
-    const distance = Math.hypot(x - moonCenterX, y - moonCenterY);
+    // 1. Handle Meme Visibility (They stay visible inside the circle)
+    memes.forEach(meme => {
+        const rect = meme.getBoundingClientRect();
+        const memeX = rect.left + (rect.width / 2);
+        const memeY = rect.top + (rect.height / 2);
+        const distToMeme = Math.hypot(x - memeX, y - memeY);
+        
+        // If the magnifying glass is over the meme, show it
+        meme.style.opacity = (distToMeme < 85) ? "0.8" : "0";
+    });
 
-    // Reveal moon if close
-    if (distance < 50) { 
+    // 2. Handle Moon Reveal (Collision)
+    const moonRect = moon.getBoundingClientRect();
+    const moonX = moonRect.left + (moonRect.width / 2);
+    const moonY = moonRect.top + (moonRect.height / 2);
+    const distToMoon = Math.hypot(x - moonX, y - moonY);
+
+    if (distToMoon < 55) { 
         isRevealed = true;
         moon.style.opacity = '1';
-        hint.innerText = "Moon Sighted! ✨";
-    } 
-    // Show random memes if far away
-    else if (distance > 250 && Math.random() > 0.985) {
-        showMeme(x, y);
+        hint.innerText = "The Moon has been sighted! ✨";
+        
+        // Hide memes once moon is found
+        memes.forEach(m => m.style.opacity = "0");
+        
+        // Remove the darkness
+        setTimeout(() => {
+            circle.style.transition = "opacity 2s";
+            circle.style.opacity = "0";
+        }, 1000);
     }
 };
+
+searchArea.addEventListener('mousemove', handleMove);
+searchArea.addEventListener('touchmove', (e) => { 
+    e.preventDefault(); 
+    handleMove(e); 
+}, {passive: false});
+
 
 searchArea.addEventListener('mousemove', handleMove);
 searchArea.addEventListener('touchmove', (e) => { 
