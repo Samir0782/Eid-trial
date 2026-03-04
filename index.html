@@ -11,10 +11,12 @@
 
     <div id="phase1" class="phase active">
         <div id="search-area">
-            <h2 id="hint-text">Search the sky for the moon... 🌙</h2>
+            <div class="text-wrapper">
+                <h2 id="hint-text">Search the sky for the moon... 🌙</h2>
+            </div>
             <div id="reveal-circle"></div>
             <img id="meme-discovery" src="" class="hidden-meme"> 
-            <div id="moon" class="moon-target">🌙</div>
+            <img id="moon" class="moon-target" src="https://upload.wikimedia.org/wikipedia/commons/2/20/Crescent-Moon.png">
         </div>
     </div>
 
@@ -26,7 +28,7 @@
             </div>
             <div class="window-content">
                 <h2>Prepare for Eid</h2>
-                <div id="decor-status">The night is quiet...</div>
+                <div id="decor-status">The sky is bright! ✨</div>
                 <button onclick="lightLanterns()">🏮 Light Lanterns</button>
                 <button onclick="nextPhase('phase3')">Continue</button>
             </div>
