@@ -17,18 +17,27 @@ body {
     z-index: -1;
 }
 
-.phase { display: none; height: 100vh; width: 100%; justify-content: center; align-items: center; flex-direction: column; }
+.phase { display: none; height: 100vh; width: 100%; justify-content: center; align-items: center; }
 .phase.active { display: flex; }
 
-/* Phase 1 Hunt Area */
-#search-area { width: 100%; height: 100%; position: relative; overflow: hidden; }
+/* PHASE 1 HUNTING AREA */
+#search-area { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+
+.text-wrapper {
+    position: absolute;
+    top: 15%; /* Centered and slightly below top */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 20;
+}
 
 #reveal-circle {
     position: absolute;
     width: 160px; height: 160px;
-    border: 2px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
-    box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.9); 
+    box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.94); 
     transform: translate(-50%, -50%);
     display: none;
     z-index: 10;
@@ -36,21 +45,22 @@ body {
 
 .moon-target {
     position: absolute;
-    top: 25%; left: 65%;
-    font-size: 70px;
+    top: 35%; left: 60%;
+    width: 80px; height: auto;
     opacity: 0;
-    transition: opacity 0.3s;
+    filter: drop-shadow(0 0 15px white);
+    transition: opacity 0.4s, transform 0.5s;
     z-index: 5;
 }
 
 .hidden-meme {
     position: absolute;
-    width: 120px; opacity: 0;
-    z-index: 6;
-    border-radius: 10px;
+    width: 120px; border-radius: 10px;
+    opacity: 0; z-index: 6;
+    transition: opacity 0.3s;
 }
 
-/* Window UI */
+/* WINDOW UI */
 .window {
     width: 90%; max-width: 380px;
     background: rgba(255, 255, 255, 0.9);
@@ -73,5 +83,5 @@ button {
     z-index: 100;
 }
 @keyframes floatUp { to { transform: translateY(-120vh); } }
-
 .gift-box { font-size: 80px; cursor: pointer; }
+    
